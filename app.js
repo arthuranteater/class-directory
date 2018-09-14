@@ -8,9 +8,28 @@ const queries = require("./queries.js");
 app.use(parser.json());
 app.use(cors());
 
+// app.get("/", (req, res) => {
+//   res.send("😎");
+// });
+
 app.get("/", (req, res) => {
   queries.listAll().then(data => res.json({ data }));
-  res.send("😎");
+});
+
+app.get("/:id", (req, res) => {
+  queries.getById(req.params.id).then(data => res.json({ data }));
+});
+
+app.post("/", (req, res) => {
+  queries.createMate(req.body).then(data => res.json({ data }));
+});
+
+app.put("/:id", (req, res) => {
+  queries.updateMate(req.params.id, req.body).then(data => res.json({ data }));
+});
+
+app.delete("/:id", (req, res) => {
+  queries.deleteMate(req.params.id).then(data => res.json({ data }));
 });
 
 app.listen(port, () => {
